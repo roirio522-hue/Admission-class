@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Success Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        body { 
+            background-color: #f3f4f6; 
+            font-family: 'Hind Siliguri', sans-serif; 
+            margin: 0; padding: 0;
+        }
+
+        /* Motivational Header */
+        .quote-header {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: #f8fafc;
+            padding: 35px 20px;
+            text-align: center;
+            border-bottom-left-radius: 35px;
+            border-bottom-right-radius: 35px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+        }
+        .quote-text {
+            font-size: 18px;
+            font-weight: 600;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* Course Card Design */
+        .course-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .card-image-wrapper {
+            width: 100%;
+            line-height: 0;
+        }
+        .card-image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .card-content {
+            padding: 15px 20px 25px 20px;
+            text-align: center;
+        }
+        .course-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        /* Blue Button Styling */
+        .btn-blue {
+            background-color: #2563eb;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: block;
+            text-align: center;
+            transition: 0.3s;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+            text-decoration: none;
+        }
+        .btn-blue:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* English Copyright Footer */
+        .copyright-footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #64748b;
+            font-size: 13px;
+            margin-top: auto;
+            border-top: 1px solid #e2e8f0;
+            background-color: #f9fafb;
+        }
+        .copyright-name {
+            font-weight: 700;
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <div class="quote-header">
+        <p class="quote-text">
+            "সফলতা মানেই শেষ নয়, ব্যর্থতা মানেই মৃত্যু নয়; আসল হলো এগিয়ে যাওয়ার সাহস ধরে রাখা।"
+        </p>
+        <span class="text-xs text-gray-400 mt-2 block">— উইনস্টন চার্চিল</span>
+    </div>
+
+    <div class="max-w-md mx-auto px-5 mt-4 flex-grow w-full">
+
+        <div class="course-card">
+            <div class="card-image-wrapper">
+                <img src="https://www.ieducationbd.com/media/course/thumbnail/Only-GST-2.jpg" alt="GST Cover">
+            </div>
+            <div class="card-content">
+                <h3 class="course-title">Only GST 2.0 | Humanities</h3>
+                <a href="./gst.html" class="btn-blue">ক্লাস শুরু করো</a>
+            </div>
+        </div>
+
+        <div class="course-card">
+            <div class="card-image-wrapper">
+                <img src="https://www.ieducationbd.com/media/course/thumbnail/icu-cover-for-website-b-min.jpg" alt="DU Cover">
+            </div>
+            <div class="card-content">
+                <h3 class="course-title">DU ICU || চবি খ ও বিভাগ পরিবর্তন (B Unit)</h3>
+                <a href="./ad.html" class="btn-blue">ক্লাস শুরু করো</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="copyright-footer">
+        <p>© 2026 | All Rights Reserved</p>
+        <p class="mt-1 text-sm">Designed & Developed by <span class="copyright-name">Rafid Ahammed</span></p>
+        <p class="mt-2 text-[10px] uppercase tracking-widest opacity-60">Digital Content Creator</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DU Course | Subject Wise Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+        body { background-color: #0d1117; color: #e6edf3; font-family: 'Hind Siliguri', sans-serif; }
+        .subject-header {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white; padding: 12px; border-radius: 10px;
+            font-weight: bold; margin: 30px 0 15px 0; text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 75, 43, 0.2);
+        }
+        .video-card { 
+            background: #161b22; border: 1px solid #30363d; 
+            border-radius: 12px; transition: 0.3s; cursor: pointer;
+        }
+        .video-card:hover { border-color: #ff4b2b; transform: translateY(-3px); }
+        #videoPopup { 
+            display: none; position: fixed; inset: 0; 
+            background: rgba(0, 0, 0, 0.95); z-index: 9999; 
+            align-items: center; justify-content: center; 
+        }
+        .popup-box { width: 95%; max-width: 900px; background: #161b22; border-radius: 15px; overflow: hidden; }
+        .loader { border-top-color: #ff4b2b; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="pb-20">
+
+    <div class="max-w-6xl mx-auto px-4 py-10">
+        <header class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-white">ঢাকা ইউনিভার্সিটি কোর্স</h1>
+            <p class="text-gray-500 text-xs font-bold mt-2 uppercase tracking-widest">সকল বিষয়ের ভিডিও লেকচার</p>
+        </header>
+
+        <div id="loading" class="text-center py-10">
+            <div class="loader rounded-full border-4 border-gray-800 h-10 w-10 inline-block"></div>
+        </div>
+
+        <div id="mainContainer" class="hidden">
+            <div class="subject-header">বাংলা প্রথম পত্র</div>
+            <div id="bangla1" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+
+            <div class="subject-header">বাংলা দ্বিতীয় পত্র</div>
+            <div id="bangla2" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+
+            <div class="subject-header">ইংরেজি প্রথম পত্র</div>
+            <div id="english1" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+
+            <div class="subject-header">ইংরেজি দ্বিতীয় পত্র</div>
+            <div id="english2" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+
+            <div class="subject-header">সাধারণ জ্ঞান বাংলাদেশ</div>
+            <div id="gk_bd" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+
+            <div class="subject-header">সাধারণ জ্ঞান আন্তর্জাতিক</div>
+            <div id="gk_int" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"></div>
+        </div>
+    </div>
+
+    <div id="videoPopup" onclick="closePopup()">
+        <div class="popup-box" onclick="event.stopPropagation()">
+            <div class="aspect-video bg-black">
+                <iframe id="mainPlayer" src="" allow="autoplay; fullscreen" allowfullscreen class="w-full h-full"></iframe>
+            </div>
+            <div class="p-4 bg-[#0d1117] flex justify-between items-center">
+                <span id="popupTitle" class="text-gray-300 font-bold text-sm truncate"></span>
+                <button onclick="closePopup()" class="bg-red-600 text-white px-6 py-2 rounded-lg font-bold text-xs">বন্ধ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // আপনার ৩টি আলাদা ড্রাইভের অ্যাপস স্ক্রিপ্ট লিঙ্কগুলো এখানে আপডেট করা হয়েছে
+        const URLS = [
+            "https://script.google.com/macros/s/AKfycbxAlNqfCaB2Yf-bZwfeO9fYjlPBvNrS-dDNe3Cgd43B3UE8Wun6LC4W-sX_w8AfnWWnTQ/exec",
+            "https://script.google.com/macros/s/AKfycbzNSyXEL0XhAGUhqglC1Tv23Iybgf2HDjKzyUEg6Vzw9C9Nua4z9iiscSdSQAQ-Hhim/exec",
+            "https://script.google.com/macros/s/AKfycby2znZp-cqDJbG6cd8Oik6ve4WwsIz42s8bpmdqSDOW616S4b-_EJ7jf0Gj3O9Y-pn6pg/exec"
+        ];
+
+        async function fetchVideos() {
+            try {
+                // সবকটি লিঙ্ক থেকে একসাথে ডাটা ফেচ করা হচ্ছে
+                const requests = URLS.map(url => fetch(url).then(res => res.json()));
+                const results = await Promise.all(requests);
+                const allData = results.flat(); // সব ড্রাইভের ডাটা এক জায়গায় করা হলো
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mainContainer').classList.remove('hidden');
+
+                allData.forEach(file => {
+                    const card = document.createElement('div');
+                    card.className = 'video-card p-2';
+                    card.onclick = () => openPopup(file.id, file.name);
+                    card.innerHTML = `
+                        <div class="aspect-video bg-gray-900 flex items-center justify-center rounded-lg mb-2">
+                            <i class="fa-solid fa-circle-play text-gray-700 text-3xl"></i>
+                        </div>
+                        <p class="text-[11px] font-bold text-gray-400 truncate text-center">${file.name}</p>
+                    `;
+
+                    // অ্যাপস স্ক্রিপ্ট থেকে আসা 'subject' (ফোল্ডারের নাম) অনুযায়ী সেকশন ভাগ করা
+                    const subject = file.subject; 
+                    if (subject === 'Bangla 1') document.getElementById('bangla1').appendChild(card);
+                    else if (subject === 'Bangla 2') document.getElementById('bangla2').appendChild(card);
+                    else if (subject === 'English 1') document.getElementById('english1').appendChild(card);
+                    else if (subject === 'English 2') document.getElementById('english2').appendChild(card);
+                    else if (subject === 'GK BD') document.getElementById('gk_bd').appendChild(card);
+                    else if (subject === 'GK INT') document.getElementById('gk_int').appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('loading').innerHTML = `<p class="text-red-500 font-bold">ভিডিও লোড করা যাচ্ছে না!</p>`;
+            }
+        }
+
+        function openPopup(id, name) {
+            const player = document.getElementById('mainPlayer');
+            player.src = `https://drive.google.com/file/d/${id}/preview?autoplay=1`;
+            document.getElementById('popupTitle').innerText = name;
+            document.getElementById('videoPopup').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePopup() {
+            document.getElementById('mainPlayer').src = "";
+            document.getElementById('videoPopup').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onload = fetchVideos;
+    </script>
+</body>
+</html>
