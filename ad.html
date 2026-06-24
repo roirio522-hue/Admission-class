@@ -21,7 +21,6 @@
         }
         .video-card:hover { border-color: #ff4b2b; transform: translateY(-3px); }
         
-        /* Updated Popup Style to match professional player store */
         #videoPopup { 
             display: none; position: fixed; inset: 0; 
             background: rgba(0, 0, 0, 0.95); z-index: 9999; 
@@ -133,7 +132,7 @@
         }
 
         function openPopup(id, name) {
-            // Using the professional Google Drive preview player
+            // গুগল ড্রাইভ প্রিভিউ লিংক সেট করা হচ্ছে
             document.getElementById('mainPlayer').src = `https://drive.google.com/file/d/${id}/preview`;
             document.getElementById('popupTitle').innerText = name;
             document.getElementById('videoPopup').style.display = 'flex';
